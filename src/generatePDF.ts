@@ -1,5 +1,6 @@
 import PDFDocument from 'pdfkit';
 import fs from "fs";
+import path from "path";
 
 interface SongMeta {
     qrPath: string;
@@ -72,5 +73,10 @@ export function makePdf(
     }
 
     doc.end();
-    stream.on('close', () => console.log('✅ PDF write stream closed.'));
+    stream.on('close', () => {
+        console.log('✅ PDF write stream closed.');
+        // cleanup .png files
+        const files = fs.readdirSync(path.dirname(output));
+        files.filter(f => f.endsWith('.png')).forEach(f => fs.unlinkSync(path.join(path.dirname(output), f)));
+    });
 }

@@ -36,7 +36,7 @@ async function loadAndRefreshTokens() {
 
 async function main() {
     await loadAndRefreshTokens();
-    const offset = Math.floor(Math.random() * 50);
+    const offset = Math.floor(Math.random() * 250);
     const tracks = await searchTracks(opts.genre, opts.fromYear, opts.toYear, opts.minPopularity, opts.limit, offset);
     if (tracks.length === 0) {
         console.error('❌ No songs found.');
